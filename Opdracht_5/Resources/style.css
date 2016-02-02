@@ -53,3 +53,10 @@ a {
     text-align:center;   
     
 }
+
+.form-field{
+    margin-top:15px;
+}
+.form-field > span{
+    width: 106px;
+}
