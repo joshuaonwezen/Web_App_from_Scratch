@@ -19,7 +19,6 @@ var cmdGeo = {
     REFRESH_RATE: 1000,
     currentPosition: currentPositionMarker = customDebugging = debugId = map = interval = intervalCounter = updateMap = false,
     locatieRij: markerRij = [],
-    
     // Event functies - bron: http://www.nczonline.net/blog/2010/03/09/custom-events-in-javascript/ Copyright (c) 2010 Nicholas C. Zakas. All rights reserved. MIT License
     // Gebruik: ET.addListener('foo', handleEvent); ET.fire('event_name'); ET.removeListener('foo', handleEvent);
     eventTarget: function () {
@@ -200,7 +199,7 @@ var cmdGeo = {
         },
 // FUNCTIES VOOR DEBUGGING
     },
-errors: {
+    errors: {
         _geo_error_handler: function (code, message) {
             debug_message('geo.js error ' + code + ': ' + message);
         },
