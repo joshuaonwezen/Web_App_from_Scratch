@@ -56,5 +56,7 @@ mensen al een keer voor jou hebben gebouwd en daar komt bijv. jQuery van pas aan
 
 #Sources
 https://angularjs.org/
+
 https://www.quora.com/Are-there-any-disadvantages-of-using-Javascript-framework-like-jQuery#http://stackoverflow.com/questions/25152506/benefits-and-drawbacks-of-using-client-side-frameworks
+
 http://1stwebdesigner.com/pros-cons-frameworks/

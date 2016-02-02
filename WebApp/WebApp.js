@@ -1,7 +1,0 @@
-function WebApp(){
-    function run(){
-    
-    }
-    
-		
-}
