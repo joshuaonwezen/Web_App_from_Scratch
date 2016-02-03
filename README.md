@@ -1,6 +1,6 @@
 # Web_App_from_Scratch
 
-#Onderzoek Frameworks & Libraries:
+#Opdracht 2: Onderzoek Frameworks & Libraries
 
 Wat ik heb ontdekt tijdens mijn studie & werk is dat Javascript zonder frameworks
 vrij beperkt is in zijn eigen kunnen. Tuurlijk kunnen er CMS systemen gemaakt worden
@@ -54,9 +54,31 @@ alleen de web app slomer maakt doordat een gigantische library/framework wordt i
 Een library zoals jQuery kan erg handig zijn voor het versimpelen van functies, het gaat hier vooral om functies die andere
 mensen al een keer voor jou hebben gebouwd en daar komt bijv. jQuery van pas aangezien je het dan niet zelf allemaal hoeft te herschrijven.
 
+
 #Sources
 https://angularjs.org/
 
 https://www.quora.com/Are-there-any-disadvantages-of-using-Javascript-framework-like-jQuery#http://stackoverflow.com/questions/25152506/benefits-and-drawbacks-of-using-client-side-frameworks
 
 http://1stwebdesigner.com/pros-cons-frameworks/
+
+#Opdracht 3: Onderzoek Single page web app
+
+Single page webapps zijn de laatste jaren erg populair, denk bijvoorbeeld aan outlook wat een grote single page is.
+Buiten de grote webapps om zien we de laatste jaren op vele (bedrijfs) websites de langste scroll websites waar op een
+web page alle informatie wordt gegeven en de gebruiker hier doorheen scrolled.
+
+Een van de grootste voordelen is dat de pagina niet opnieuw geladen wordt elke keer. Dit zorgt ervoor dat de gebruiker
+gewoon een smooth pagina krijgt met wanneer het ooit voorkomt loading balkjes binnen de page, wat toch een stuk netter is
+dan de browser die de hele pagina in delen weer opnieuw laad.
+
+Aangezien ik zelf voor een marketing/consultancy bureau werk en veel gebruik maak van Google Analytics en SEO is een van de nadelen
+voor mij dat het lastig is om pagina's te meten aangezien Analytics gebruik maakt van pageviews. Natuurlijk is hier wel een oplossing voor,
+virtual page views, alleen kost dit een hoop tijd om op te zetten. Vaak doen developers van grote websites dit zelf aangezien vrijwel elke winstgevende website
+wel Google Analytics gebruikt wordt hier tijdens development wel aangedacht. Ook voor dingen als SEO is het lastig omdat natuurlijk maar 1 pagina op google weergegeven
+kan worden, als er dan naar een specifiek deel van de pagina gezocht wordt (denk bijvoorbeeld aan een productcategorie waar iemand op googled) kan dit niet met een single page app.
+Een oplossing hiervoor zijn hashes, wat wel goed werkt in Google maar verschillende search engines vatten dit weer anders op.
+
+#Sources
+
+https://en.wikipedia.org/wiki/Single-page_application

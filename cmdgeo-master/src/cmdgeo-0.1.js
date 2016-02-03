@@ -148,16 +148,16 @@ var cmdGeo = {
                 var markerLatLng = new google.maps.LatLng(cmdGeo.locaties[i][3], cmdGeo.locaties[i][4]);
                 routeList.push(markerLatLng);
 
-                cmdGeo.markerRij[i] = {};
+                cmdGeo.locatieRij.markerRij[i] = {};
                 for (var attr in cmdGeo.locatieMarker) {
-                    cmdGeo.markerRij[i][attr] = cmdGeo.locatieMarker[attr];
+                    cmdGeo.locatieRij.markerRij[i][attr] = cmdGeo.locatieMarker[attr];
                 }
-                cmdGeo.markerRij[i].scale = cmdGeo.locaties[i][2] / 3;
+                cmdGeo.locatieRij.markerRij[i].scale = cmdGeo.locaties[i][2] / 3;
 
                 var marker = new google.maps.Marker({
                     position: markerLatLng,
-                    map: cmdGeo.map,
-                    icon: cmdGeo.markerRij[i],
+                    map: cmdGeo.currentPosition.map,
+                    icon: cmdGeo.locatieRij.markerRij[i],
                     title: cmdGeo.locaties[i][0]
                 });
             }
@@ -167,7 +167,7 @@ var cmdGeo = {
                 debug_message("Route intekenen");
                 var route = new google.maps.Polyline({
                     clickable: false,
-                    map: map,
+                    map: cmdGeo.currentPosition.map,
                     path: routeList,
                     strokeColor: 'Black',
                     strokeOpacity: .6,
@@ -178,9 +178,9 @@ var cmdGeo = {
 
             // Voeg de locatie van de persoon door
             currentPositionMarker = new google.maps.Marker({
-                position: cmdGeo.kaartOpties.center,
-                map: cmdGeo.map,
-                icon: cmdGeo.positieMarker,
+                position: cmdGeo.currentPosition.kaartOpties.center,
+                map: cmdGeo.currentPosition.map,
+                icon: cmdGeo.currentPosition.positieMarker,
                 title: 'U bevindt zich hier'
             });
 
@@ -193,9 +193,9 @@ var cmdGeo = {
 // Update de positie van de gebruiker op de kaart
         update_positie: function (event) {
             // use currentPosition to center the map
-            var newPos = new google.maps.LatLng(currentPosition.coords.latitude, currentPosition.coords.longitude);
-            cmdGeo.map.setCenter(newPos);
-            currentPositionMarker.setPosition(newPos);
+            var newPos = new google.maps.LatLng(cmdGeo.currentPosition.coords.latitude, cmdGeo.currentPosition.coords.longitude);
+            cmdGeo.currentPosition.map.setCenter(newPos);
+            cmdGeo.currentPosition.currentPositionMarker.setPosition(newPos);
         },
 // FUNCTIES VOOR DEBUGGING
     },
@@ -204,11 +204,11 @@ var cmdGeo = {
             debug_message('geo.js error ' + code + ': ' + message);
         },
         debug_message: function (message) {
-            (customDebugging && debugId) ? document.getElementById(debugId).innerHTML : console.log(message);
+            (cmdGeo.currentPosition.customDebugging && cmdGeo.currentPosition.debugId) ? document.getElementById(cmdGeo.currentPosition.debugId).innerHTML : console.log(message);
         },
         set_custom_debugging: function (debugId) {
             debugId = this.debugId;
-            customDebugging = true;
+            cmdGeo.currentPosition.customDebugging = true;
         },
     },
 }
