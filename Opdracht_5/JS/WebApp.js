@@ -8,12 +8,15 @@
         },
         
         routes: {
-            init: function () {                
+            init: function () { 
+                //Window onload to wait for objects to exist
+                window.onload = function () {
+                    if (window.location.href.indexOf('#') != -1) {
+                        webApp.sections.toggle(window.location.href)
+                    }
+                }
                 window.addEventListener('hashchange', function(){
-                    
-                    var route = window.location.href;
-                    webApp.sections.toggle(route);
-                    
+                    webApp.sections.toggle(window.location.href);
                 });
             },
         },
