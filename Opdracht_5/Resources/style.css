@@ -60,3 +60,11 @@ a {
 .form-field > span{
     width: 106px;
 }
+
+#submit-button{
+    width:100px;
+    height:25px;
+    background-color:#72BCD4;
+    border:none;
+    color:#FFFFFF;
+}
