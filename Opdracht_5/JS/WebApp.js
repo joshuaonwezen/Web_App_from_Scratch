@@ -28,12 +28,12 @@
                 }
                 
                 //Change context depending on route
-                if (route.indexOf('register') != -1) {
-                    document.getElementById('register-info').style.display = "";
-                } else if (route.indexOf('login') != -1) {
-                    document.getElementById('login-info').style.display = "";
-                }
+                var section = route.split('#');
+                this.showSection(section[1]);
                 
+            },
+            showSection: function(section){
+                document.getElementById(section + '-info').style.display = "";
             },
         },
     }
