@@ -1,10 +1,12 @@
 (function () {
     var webApp = {
+        
         app: {
             init: function () {
                 webApp.routes.init();
             },
         },
+        
         routes: {
             init: function () {                
                 window.addEventListener('hashchange', function(){
@@ -15,6 +17,7 @@
                 });
             },
         },
+        
         sections: {
             toggle: function (route) {
                 var register = document.getElementById('register-info');
