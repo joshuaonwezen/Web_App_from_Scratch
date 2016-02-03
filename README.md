@@ -82,3 +82,4 @@ Een oplossing hiervoor zijn hashes, wat wel goed werkt in Google maar verschille
 #Sources
 
 https://en.wikipedia.org/wiki/Single-page_application
+https://www.manning.com/books/single-page-web-applications
