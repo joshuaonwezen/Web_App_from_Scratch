@@ -20,19 +20,20 @@
         
         sections: {
             toggle: function (route) {
-                var register = document.getElementById('register-info');
-                var login = document.getElementById('login-info');
                 
-                var intro = document.getElementById('intro-info');
-                intro.style.display="none";
-                
-                if(route.indexOf('register') != -1){
-                    register.style.display="";
-                    login.style.display="none";
-                }else if (route.indexOf('login') != -1){
-                    register.style.display="none";
-                    login.style.display="";
+                //Clear all existing screens
+                var screens = document.getElementsByClassName('container-text');
+                for(i = 0; i < screens.length; i++){
+                    screens[i].style.display="none";
                 }
+                
+                //Change context depending on route
+                if (route.indexOf('register') != -1) {
+                    document.getElementById('register-info').style.display = "";
+                } else if (route.indexOf('login') != -1) {
+                    document.getElementById('login-info').style.display = "";
+                }
+                
             },
         },
     }
