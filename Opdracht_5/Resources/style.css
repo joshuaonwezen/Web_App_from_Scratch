@@ -49,9 +49,8 @@ a {
     text-decoration: none;
 }
 
-#register-info, #login-info{
+#register-section, #login-section{
     text-align:center;   
-    
 }
 
 .form-field{
