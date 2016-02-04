@@ -23,20 +23,21 @@
         
         sections: {
             toggle: function (route) {
-                
-                //Clear all existing screens
-                var screens = document.getElementsByClassName('container-text');
-                for(i = 0; i < screens.length; i++){
-                    screens[i].style.display="none";
-                }
+                this.hideSections();
                 
                 //Change context depending on route
                 var section = route.split('#');
                 this.showSection(section[1]);
-                
             },
             showSection: function(section){
-                document.getElementById(section + '-info').style.display = "";
+                document.getElementById(section + '-section').style.display = "";
+            },
+            hideSections: function(){
+                //Clear all existing screens
+                var screens = document.getElementsByClassName('container-text');
+                for (i = 0; i < screens.length; i++) {
+                    screens[i].style.display = "none";
+                }
             },
         },
     }
