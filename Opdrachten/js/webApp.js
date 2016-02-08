@@ -19,18 +19,19 @@
                     if (window.location.href.indexOf('#') != -1) {
                         webApp.section.toggle(window.location.href)
                     }
-                    /* 
-                    routie({
-                        'register': function () {
-                            webApp.section.hideSections();
-                            document.getElementById('register-section').style.display = "";
-                        },
-                        'login': function () {
-                            webApp.section.hideSections();
-                            document.getElementById('login-section').style.display = "";
-                        }
-                    });
-                    */
+                    //Routie code, don't like it as my code is more efficient for my implementation. 
+                    //Routie requires me to setup a function for each section, instead of just doing it dynamically on change
+                    //Ran routie code through metric checks and the cyclomatic complexirty is not too great (27% density with 38 in just under 130 sLOC)
+//                    routie({
+//                        'register': function () {
+//                            webApp.section.hideSections();
+//                            document.getElementById('register-section').style.display = "";
+//                        },
+//                        'login': function () {
+//                            webApp.section.hideSections();
+//                            document.getElementById('login-section').style.display = "";
+//                        }
+//                    });
                 }
                 window.addEventListener('hashchange', function(){
                     webApp.section.toggle(window.location.href);
@@ -59,35 +60,6 @@
                 }
             },
             
-            generateTemplate: function(section, obj){
-                var soundcloudData = JSON.parse(obj);
-                if (soundcloudData[0] !== [] || soundcloudData !== undefined) {
-                    document.getElementById('soundcloud-playlists').innerHTML = "";
-
-                    var userinfo = {
-                        username: 'Name: ' + soundcloudData[0].user.username,
-                        last_modified: 'Last modified: ' + soundcloudData[0].user.last_modified,
-                        permalink_url: 'URL: ' + soundcloudData[0].user.permalink_url,
-                    }
-                    var playlists = _.pluck(soundcloudData, 'id');
-                    for (var i = 0; i < soundcloudData.length; i++) {
-                        //No longer needed because of underscore.js
-                        //var playlistId = soundcloudData[i].id;
-                        document.getElementById('soundcloud-playlists').innerHTML += '<iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
-                    }
-
-                    Transparency.render(document.getElementById('soundcloud-section'), userinfo)
-                    
-                    if (webApp.soundcloud.playlistGenerator !== undefined) {
-                        webApp.soundcloud.playlistGenerator.terminate();
-                        webApp.soundcloud.playlistGenerator = undefined;
-                    }
-
-                    //var uri = _.where(newObj, 'soundcloud')
-                }else{
-                    document.getElementById('soundcloud-errors').innerHTML = "This user was not found.";
-                }
-            },
         },
         
         
@@ -98,24 +70,25 @@
             apiPrefix: "http://api.soundcloud.com/",
             playlistGenerator: undefined,
 
-
+            //Taken from webworker tutorial http://www.w3schools.com/html/html5_webworkers.asp 
             createSoundcloudRequest: function(){
-
-                //Taken from webworker tutorial http://www.w3schools.com/html/html5_webworkers.asp 
                 document.getElementById('soundcloud-submit').addEventListener('click', function () {
                     if (typeof (Worker) !== "undefined") {
                         if (typeof (webApp.soundcloud.playlistGenerator) == "undefined") {
                             webApp.soundcloud.playlistGenerator = new Worker(webApp.soundcloud.getSoundcloudUser());
                         }else{
+                            //If it already exists, clear it
                             webApp.soundcloud.playlistGenerator.terminate();
                             webApp.soundcloud.playlistGenerator = undefined;
                         }
                     }else{
                         webApp.soundcloud.getSoundcloudUser();
+                        console.log('Web worker not working');
                     }
                 });
             },
             
+            //Setup all info to send to the ajax call
             getSoundcloudUser: function(){
                 var userId = "josh-onwezen";
                 var requestPath = "users";
@@ -132,12 +105,46 @@
             },
         },
         
+        template: {
+            generateTemplate: function (section, obj) {
+                var soundcloudData = JSON.parse(obj);
+                if (soundcloudData[0] !== [] || soundcloudData !== undefined) {
+                    document.getElementById('soundcloud-playlists').innerHTML = "";
+
+                    //Inserting info for transparency.js
+                    var userinfo = {
+                        username: 'Name: ' + soundcloudData[0].user.username,
+                        last_modified: 'Last modified: ' + soundcloudData[0].user.last_modified,
+                        permalink_url: 'URL: ' + soundcloudData[0].user.permalink_url,
+                    }
+
+                    //Creating playlist embeds for each playlist
+                    var playlists = _.pluck(soundcloudData, 'id');
+                    for (var i = 0; i < soundcloudData.length; i++) {
+                        //No longer needed because of underscore.js
+                        //var playlistId = soundcloudData[i].id;
+                        document.getElementById('soundcloud-playlists').innerHTML += '<iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
+                    }
+
+                    //Actually rendering it
+                    Transparency.render(document.getElementById('soundcloud-section'), userinfo)
+
+                    if (webApp.soundcloud.playlistGenerator !== undefined) {
+                        webApp.soundcloud.playlistGenerator.terminate();
+                        webApp.soundcloud.playlistGenerator = undefined;
+                    }
+
+                } else {
+                    document.getElementById('soundcloud-errors').innerHTML = "This user was not found.";
+                }
+            },
+        },
+        //Information Source: http://www.tutorialspoint.com/ajax/what_is_xmlhttprequest.htm
         ajaxRequest: function(data, action){
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4 && xhttp.status == 200) {
-                        webApp.section.generateTemplate(action, xhttp.responseText);
-                        //document.getElementById(action).innerHTML = xhttp.responseText;
+                        webApp.template.generateTemplate(action, xhttp.responseText);
                     }
                 };
                 xhttp.open(data.method, data.url, true);
