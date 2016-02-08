@@ -61,8 +61,7 @@
             
             generateTemplate: function(section, obj){
                 var soundcloudData = JSON.parse(obj);
-                console.log(soundcloudData);
-                if (soundcloudData !== [] || soundcloudData !== '' || soundcloudData !== undefined) {
+                if (soundcloudData[0] !== [] || soundcloudData !== undefined) {
                     document.getElementById('soundcloud-playlists').innerHTML = "";
 
                     var userinfo = {
@@ -70,15 +69,19 @@
                         last_modified: 'Last modified: ' + soundcloudData[0].user.last_modified,
                         permalink_url: 'URL: ' + soundcloudData[0].user.permalink_url,
                     }
-
+                    var playlists = _.pluck(soundcloudData, 'id');
                     for (var i = 0; i < soundcloudData.length; i++) {
-                        var playlistId = soundcloudData[i].id;
-                        document.getElementById('soundcloud-playlists').innerHTML += '<iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlistId + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
+                        //No longer needed because of underscore.js
+                        //var playlistId = soundcloudData[i].id;
+                        document.getElementById('soundcloud-playlists').innerHTML += '<iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
                     }
 
                     Transparency.render(document.getElementById('soundcloud-section'), userinfo)
-                    webApp.soundcloud.playlistGenerator.terminate();
-                    webApp.soundcloud.playlistGenerator = undefined;
+                    
+                    if (webApp.soundcloud.playlistGenerator !== undefined) {
+                        webApp.soundcloud.playlistGenerator.terminate();
+                        webApp.soundcloud.playlistGenerator = undefined;
+                    }
 
                     //var uri = _.where(newObj, 'soundcloud')
                 }else{
