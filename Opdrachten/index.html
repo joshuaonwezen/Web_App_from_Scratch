@@ -1,0 +1,62 @@
+<head>
+    <link href="resources/style.css" rel="stylesheet" type="text/css">
+    
+    <script src="lib/routie.min.js"></script>
+    <script src="lib/transparency.js"></script>
+    <script src="lib/ajax.min.js"></script>
+
+    <script src="js/webApp.js"></script>
+    
+    <script src="http://underscorejs.org/underscore.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsvU_dlzwUJ3ogmQ4o5AlKVToAJ_j2l6s"></script>
+    <script src="https://api.soundcloud.com/tracks?client_id=a1ed0ce4135f0f32d4f1eaa4e5699b8e"></script>
+</head>
+
+
+<body>
+    
+
+    <div class="nav">
+        <div class="panel-left">
+            <h1>
+                <a href="#info">Info</a>
+            </h1>
+        </div>
+        <div class="panel-right">
+            <h1>
+                <a href="#list">List</a>
+            </h1>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="container-text" id="intro-section">
+            <p>
+                Input your soundcloud username below and press load.  
+            </p>
+            <input type="text" id="soundcloud-username"/>
+            <button id="soundcloud-submit">Load</button>
+        </div>
+        <div class="container-text" id="soundcloud-section">
+            <ul id="userinfo">
+                <li class="username"></li>
+                <li class="last_modified"></li>
+                <li class="permalink_url"></li>
+            </ul>
+            <div id="soundcloud-playlists">
+                
+            </div>
+            <span id="soundcloud-error"></span>
+        </div>
+        <div class="container-text" id="info-section" style="display: none;">
+            <h1 style="text-align:center">
+                Info Section
+            </h1>
+        </div>
+        <div class="container-text" id="list-section" style="display: none;">
+            <h1>
+                List Section
+            </h1>
+        </div>
+    </div>
+</body>
