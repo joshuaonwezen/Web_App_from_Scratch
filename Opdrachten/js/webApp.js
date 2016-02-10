@@ -6,7 +6,7 @@
             init: function () {
                 webApp.routes.init();
                 window.onload = function () {
-                    webApp.soundcloud.createSoundcloudRequest();
+                    webApp.soundcloud.soundcloudHandler();
                 }
             },
         },
@@ -15,27 +15,26 @@
         routes: {
             init: function () { 
                 //Window onload to wait for objects to exist
-                window.onload = function () {
-                    if (window.location.href.indexOf('#') != -1) {
-                        webApp.section.toggle(window.location.href)
-                    }
-                    //Routie code, don't like it as my code is more efficient for my implementation. 
-                    //Routie requires me to setup a function for each section, instead of just doing it dynamically on change
-                    //Ran routie code through metric checks and the cyclomatic complexirty is not too great (27% density with 38 in just under 130 sLOC)
-//                    routie({
-//                        'register': function () {
-//                            webApp.section.hideSections();
-//                            document.getElementById('register-section').style.display = "";
-//                        },
-//                        'login': function () {
-//                            webApp.section.hideSections();
-//                            document.getElementById('login-section').style.display = "";
-//                        }
-//                    });
-                }
-                window.addEventListener('hashchange', function(){
-                    webApp.section.toggle(window.location.href);
-                });
+//                window.onload = function () {
+//                    if (window.location.href.indexOf('#') != -1) {
+//                        webApp.section.toggle(window.location.href)
+//                    }
+//                    Routie code, don't like it as my code is more efficient for my implementation. 
+//                    Routie requires me to setup a function for each section, instead of just doing it dynamically on change
+                    routie({
+                        'playlist': function () {
+                            webApp.section.hideSections();
+                            document.getElementById('playlist-section').style.display = "";
+                        },
+                        'track': function () {
+                            webApp.section.hideSections();
+                            document.getElementById('track-section').style.display = "";
+                        }
+                    });
+//                }
+//                window.addEventListener('hashchange', function(){
+//                    webApp.section.toggle(window.location.href);
+//                });
 
             },
         },
@@ -71,20 +70,9 @@
             playlistGenerator: undefined,
 
             //Taken from webworker tutorial http://www.w3schools.com/html/html5_webworkers.asp 
-            createSoundcloudRequest: function(){
+            soundcloudHandler: function(){
                 document.getElementById('soundcloud-submit').addEventListener('click', function () {
-                    if (typeof (Worker) !== "undefined") {
-                        if (typeof (webApp.soundcloud.playlistGenerator) == "undefined") {
-                            webApp.soundcloud.playlistGenerator = new Worker(webApp.soundcloud.getSoundcloudUser());
-                        }else{
-                            //If it already exists, clear it
-                            webApp.soundcloud.playlistGenerator.terminate();
-                            webApp.soundcloud.playlistGenerator = undefined;
-                        }
-                    }else{
-                        webApp.soundcloud.getSoundcloudUser();
-                        console.log('Web worker not working');
-                    }
+                    webApp.soundcloud.getSoundcloudUser();
                 });
             },
             
@@ -101,6 +89,7 @@
                     url: webApp.soundcloud.apiPrefix + requestPath + "/" + userId + "/playlists" + webApp.soundcloud.clientId,
                 }
                 var section = "soundcloud-section";
+                
                 webApp.ajaxRequest(data, section);
             },
         },
@@ -117,7 +106,14 @@
                         last_modified: 'Last modified: ' + soundcloudData[0].user.last_modified,
                         permalink_url: 'URL: ' + soundcloudData[0].user.permalink_url,
                     }
-
+                    
+                    console.log(soundcloudData);
+                    //filter and map in underscore.js
+                    var underscoreExercise = _(soundcloudData).pluck('title').map(function (value){return 'Name:'+ value});
+                    var trackcount = _.pluck(soundcloudData, 'track_count');
+                    var playlistsWithAtleastFiveTracks = _.filter(trackcount, function(amount){ return amount > 3;});
+                    console.log(underscoreExercise, trackcount, playlistsWithAtleastFiveTracks);
+                    
                     //Creating playlist embeds for each playlist
                     var playlists = _.pluck(soundcloudData, 'id');
                     for (var i = 0; i < soundcloudData.length; i++) {
@@ -141,14 +137,30 @@
         },
         //Information Source: http://www.tutorialspoint.com/ajax/what_is_xmlhttprequest.htm
         ajaxRequest: function(data, action){
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (xhttp.readyState == 4 && xhttp.status == 200) {
-                        webApp.template.generateTemplate(action, xhttp.responseText);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    if (typeof (Worker) !== "undefined") {
+                        if (typeof (webApp.soundcloud.playlistGenerator) == "undefined") {
+                            webApp.soundcloud.playlistGenerator = new Worker(webApp.template.generateTemplate(action, xhttp.responseText));
+                        } else {
+                            //If it already exists, clear it
+                            webApp.soundcloud.playlistGenerator.terminate();
+                            webApp.soundcloud.playlistGenerator = undefined;
+                        }
                     }
-                };
-                xhttp.open(data.method, data.url, true);
-                xhttp.send();
+                    else{
+                        webApp.template.generateTemplate(action, xhttp.responseText);
+                        console.log('Web worker not working')
+                    }
+                }
+            };
+            xhttp.open(data.method, data.url, true);
+            xhttp.send();
+//                
+//                ajax(data.url, function (res) {
+//                    webApp.template.generateTemplate(action, res);
+//                });
         },
         
     }
