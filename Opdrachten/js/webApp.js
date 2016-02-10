@@ -89,7 +89,6 @@
                     url: webApp.soundcloud.apiPrefix + requestPath + "/" + userId + "/playlists" + webApp.soundcloud.clientId,
                 }
                 var section = "soundcloud-section";
-                
                 webApp.ajaxRequest(data, section);
             },
         },
@@ -137,27 +136,45 @@
         },
         //Information Source: http://www.tutorialspoint.com/ajax/what_is_xmlhttprequest.htm
         ajaxRequest: function(data, action){
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (xhttp.readyState == 4 && xhttp.status == 200) {
-                    if (typeof (Worker) !== "undefined") {
-                        if (typeof (webApp.soundcloud.playlistGenerator) == "undefined") {
-                            webApp.soundcloud.playlistGenerator = new Worker(webApp.template.generateTemplate(action, xhttp.responseText));
+//            var xhttp = new XMLHttpRequest();
+//            xhttp.onreadystatechange = function () {
+//                if (xhttp.readyState == 4 && xhttp.status == 200) {
+//                    if (typeof (Worker) !== "undefined") {
+//                        if (typeof (webApp.soundcloud.playlistGenerator) == "undefined") {
+//                            webApp.soundcloud.playlistGenerator = new Worker(webApp.template.generateTemplate(action, xhttp.responseText));
+//                        } else {
+//                            //If it already exists, clear it
+//                            webApp.soundcloud.playlistGenerator.terminate();
+//                            webApp.soundcloud.playlistGenerator = undefined;
+//                        }
+//                    }
+//                    else{
+//                        webApp.template.generateTemplate(action, xhttp.responseText);
+//                        console.log('Web worker not working')
+//                    }
+//                }
+//            };
+//            xhttp.open(data.method, data.url, true);
+//            xhttp.send();
+            
+                return new Promise(function (resolve, reject) {
+                    var req = new XMLHttpRequest();
+                    req.open(data.method, data.url);
+
+                    req.onload = function () {
+
+                        if (req.status == 200) {
+                            resolve(webApp.template.generateTemplate(action, req.response))
                         } else {
-                            //If it already exists, clear it
-                            webApp.soundcloud.playlistGenerator.terminate();
-                            webApp.soundcloud.playlistGenerator = undefined;
+                            reject(Error(req.statusText));
                         }
-                    }
-                    else{
-                        webApp.template.generateTemplate(action, xhttp.responseText);
-                        console.log('Web worker not working')
-                    }
-                }
-            };
-            xhttp.open(data.method, data.url, true);
-            xhttp.send();
-//                
+                    };
+                    req.onerror = function () {
+                        reject(Error("Network Error"));
+                    };
+                    req.send();
+                });
+                
 //                ajax(data.url, function (res) {
 //                    webApp.template.generateTemplate(action, res);
 //                });
