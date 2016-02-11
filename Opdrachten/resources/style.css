@@ -59,12 +59,13 @@ a {
     width: 106px;
 }
 
-#soundcloud-submit{
+button{
     width:100px;
-    height:25px;
+    height: 24px;
     background-color:#153a45;
     border:none;
     color:#FFFFFF;
+    cursor:pointer;
 }
 
 iframe{
@@ -75,4 +76,21 @@ iframe{
 ul{
     list-style-type: none;
     margin-left: -36px;
+}
+.soundcloud-box{
+    display: flex;
+    flex-direction:column;
+    text-align:center;
+    max-width:400px;
+}
+.soundcloud-box a{
+    width:100px;
+   background-color:#153a45;
+    color:#FFFFFF;
+    font-size:13.3333px;
+    cursor:pointer;
+    margin:auto;
+}
+iframe{
+    margin-bottom:20px;
 }

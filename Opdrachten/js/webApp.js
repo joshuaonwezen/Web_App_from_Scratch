@@ -14,7 +14,7 @@
         //Finding routes functions
         routes: {
             init: function () { 
-                //Window onload to wait for objects to exist
+//                Window onload to wait for objects to exist
 //                window.onload = function () {
 //                    if (window.location.href.indexOf('#') != -1) {
 //                        webApp.section.toggle(window.location.href)
@@ -29,6 +29,10 @@
                         'track': function () {
                             webApp.section.hideSections();
                             document.getElementById('track-section').style.display = "";
+                        },
+                        'details': function () {
+                            webApp.section.hideSections();
+                            document.getElementById('details-section').style.display = "";
                         }
                     });
 //                }
@@ -67,9 +71,7 @@
             //Standard info
             clientId: "?client_id=a1ed0ce4135f0f32d4f1eaa4e5699b8e",    
             apiPrefix: "http://api.soundcloud.com/",
-            playlistGenerator: undefined,
 
-            //Taken from webworker tutorial http://www.w3schools.com/html/html5_webworkers.asp 
             soundcloudHandler: function(){
                 document.getElementById('soundcloud-submit').addEventListener('click', function () {
                     webApp.soundcloud.getSoundcloudUser();
@@ -89,7 +91,11 @@
                     url: webApp.soundcloud.apiPrefix + requestPath + "/" + userId + "/playlists" + webApp.soundcloud.clientId,
                 }
                 var section = "soundcloud-section";
-                webApp.ajaxRequest(data, section);
+                var worker = new Worker(webApp.ajaxRequest(data, section));
+                worker.onmessage = function (event) {
+                    console.log("This " + event.data);
+                };
+               
             },
         },
         
@@ -106,7 +112,6 @@
                         permalink_url: 'URL: ' + soundcloudData[0].user.permalink_url,
                     }
                     
-                    console.log(soundcloudData);
                     //filter and map in underscore.js
                     var underscoreExercise = _(soundcloudData).pluck('title').map(function (value){return 'Name:'+ value});
                     var trackcount = _.pluck(soundcloudData, 'track_count');
@@ -118,20 +123,33 @@
                     for (var i = 0; i < soundcloudData.length; i++) {
                         //No longer needed because of underscore.js
                         //var playlistId = soundcloudData[i].id;
-                        document.getElementById('soundcloud-playlists').innerHTML += '<iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
+                        document.getElementById('soundcloud-playlists').innerHTML += '<div class="soundcloud-box"><iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe><a id="details-'+soundcloudData[i].id+'-ref" href="#details">Details</a></div>';
+                        webApp.template.detailSectionHandler('details-'+soundcloudData[i].id+'-ref', soundcloudData[i]);
                     }
 
                     //Actually rendering it
                     Transparency.render(document.getElementById('soundcloud-section'), userinfo)
 
-                    if (webApp.soundcloud.playlistGenerator !== undefined) {
-                        webApp.soundcloud.playlistGenerator.terminate();
-                        webApp.soundcloud.playlistGenerator = undefined;
-                    }
-
                 } else {
                     document.getElementById('soundcloud-errors').innerHTML = "This user was not found.";
                 }
+            },
+            detailSectionHandler: function(button, data){
+               var titles = _.pluck(data.tracks, 'title');
+               console.log(document.getElementById(button));
+                window.onload = function () {
+                    document.getElementById(button).addEventListener('click', function () {
+                        console.log(titles);
+                        var playlistinfo = {
+                            title: {
+                                text: function () {
+                                    return this.value;
+                                }
+                            },
+                        }
+                        Transparency.render(document.getElementById('details-section'), titles, playlistinfo);
+                    });
+           }
             },
         },
         //Information Source: http://www.tutorialspoint.com/ajax/what_is_xmlhttprequest.htm
