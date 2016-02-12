@@ -15,30 +15,30 @@
         routes: {
             init: function () { 
 //                Window onload to wait for objects to exist
-//                window.onload = function () {
-//                    if (window.location.href.indexOf('#') != -1) {
-//                        webApp.section.toggle(window.location.href)
-//                    }
+                window.onload = function () {
+                    if (window.location.href.indexOf('#') != -1) {
+                        webApp.section.toggle(window.location.href)
+                    }
 //                    Routie code, don't like it as my code is more efficient for my implementation. 
 //                    Routie requires me to setup a function for each section, instead of just doing it dynamically on change
-                    routie({
-                        'playlist': function () {
-                            webApp.section.hideSections();
-                            document.getElementById('playlist-section').style.display = "";
-                        },
-                        'track': function () {
-                            webApp.section.hideSections();
-                            document.getElementById('track-section').style.display = "";
-                        },
-                        'details': function () {
-                            webApp.section.hideSections();
-                            document.getElementById('details-section').style.display = "";
-                        }
-                    });
-//                }
-//                window.addEventListener('hashchange', function(){
-//                    webApp.section.toggle(window.location.href);
-//                });
+//                    routie({
+//                        'playlist': function () {
+//                            webApp.section.hideSections();
+//                            document.getElementById('playlist-section').style.display = "";
+//                        },
+//                        'track': function () {
+//                            webApp.section.hideSections();
+//                            document.getElementById('track-section').style.display = "";
+//                        },
+//                        'details': function () {
+//                            webApp.section.hideSections();
+//                            document.getElementById('details-section').style.display = "";
+//                        }
+//                    });
+                }
+                window.addEventListener('hashchange', function(){
+                    webApp.section.toggle(window.location.href);
+                });
 
             },
         },
@@ -123,8 +123,10 @@
                     for (var i = 0; i < soundcloudData.length; i++) {
                         //No longer needed because of underscore.js
                         //var playlistId = soundcloudData[i].id;
-                        document.getElementById('soundcloud-playlists').innerHTML += '<div class="soundcloud-box"><iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe><a id="details-'+soundcloudData[i].id+'-ref" href="#details">Details</a></div>';
-                        webApp.template.detailSectionHandler('details-'+soundcloudData[i].id+'-ref', soundcloudData[i]);
+                        document.getElementById('soundcloud-playlists').innerHTML += '<div class="soundcloud-box"><iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe><a id="details-'+soundcloudData[i].id+'-ref" href="#details-'+soundcloudData[i].id+'">Details</a></div>';
+                        document.getElementById('details-section').innerHTML += '<div id="details-'+soundcloudData[i].id+'-section" class="container-text" style="display: none;"></div>'
+                        webApp.template.generateHtml(soundcloudData[i])
+                        webApp.template.detailSectionHandler('details-'+soundcloudData[i].id+'-section', soundcloudData[i]);
                     }
 
                     //Actually rendering it
@@ -134,22 +136,43 @@
                     document.getElementById('soundcloud-errors').innerHTML = "This user was not found.";
                 }
             },
-            detailSectionHandler: function(button, data){
-               var titles = _.pluck(data.tracks, 'title');
-               console.log(document.getElementById(button));
-                window.onload = function () {
-                    document.getElementById(button).addEventListener('click', function () {
-                        console.log(titles);
-                        var playlistinfo = {
-                            title: {
-                                text: function () {
-                                    return this.value;
-                                }
-                            },
+            generateHtml: function(data){
+                document.getElementById('details-'+data.id+'-section').innerHTML += '<div class="trackinfo">'
+                document.getElementById('details-'+data.id+'-section').innerHTML += '<label>Track: </label><span class="title"></span><br><br>'
+                document.getElementById('details-'+data.id+'-section').innerHTML += '<label>Link: </label><span class="permalink_url"></span><br><br>'
+                document.getElementById('details-'+data.id+'-section').innerHTML += '<label>Favorites: </label><span class="favoritings_count"></span><br><br>';
+            },
+            detailSectionHandler: function(div, data){
+                var titlesObj = _.pluck(data.tracks, 'title');
+                var titles = titlesObj.map(function (value){return value});
+                var urlsObj = _.pluck(data.tracks, 'permalink_url');
+                var urls = urlsObj.map(function (value){return value});
+                var favoritesObj = _.pluck(data.tracks, 'favoritings_count');
+                var favorites = favoritesObj.map(function (value){return value});
+
+                var toAppend =  {
+                    titles: titles,
+                    urls: urls,
+                    favorites: favorites
+                };
+                var titleText = {
+                    title: {
+                        text: function () {
+                            return this.titles;
                         }
-                        Transparency.render(document.getElementById('details-section'), titles, playlistinfo);
-                    });
-           }
+                    },
+                    permalink_url: {
+                        text: function () {
+                            return this.urls;
+                        }
+                    },
+                    favoritings_count: {
+                        text: function () {
+                            return this.favorites;
+                        }
+                    },
+                }
+                Transparency.render(document.getElementById(div), toAppend, titleText);
             },
         },
         //Information Source: http://www.tutorialspoint.com/ajax/what_is_xmlhttprequest.htm
