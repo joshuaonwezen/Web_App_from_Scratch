@@ -17,6 +17,7 @@ var handler = {
 //        });
 //        hammer.get('swipe').set({direction: Hammer.DIRECTION_VERTICAL});
         $('body').addEventListener('touchend', function () {
+            $('#swipe-section').style.display="";
             soundcloud.getSoundcloudUser();
         })
     },
