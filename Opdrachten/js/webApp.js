@@ -10,6 +10,7 @@
                 window.onload = function () {
                     handler.init();
                 }
+                
             },
         },        
 

@@ -7,8 +7,8 @@ var soundcloud = {
     getSoundcloudUser: function () {
         var userId = "josh-onwezen";
         var requestPath = "users";
-        if (document.getElementById('soundcloud-username').value != "") {
-            userId = document.getElementById('soundcloud-username').value;
+        if ($('#soundcloud-username').value != "") {
+            userId = $('#soundcloud-username').value;
         }
         var data = {
             method: "GET",

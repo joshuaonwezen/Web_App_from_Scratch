@@ -10,7 +10,7 @@ var template = {
     generateTemplate: function (section, obj) {
         var soundcloudData = JSON.parse(obj);
         if (soundcloudData[0] !== [] || soundcloudData !== undefined) {
-            document.getElementById('soundcloud-playlists').innerHTML = "";
+            $('#soundcloud-playlists').innerHTML = "";
             console.log(soundcloudData);
             //Inserting info for transparency.js
             var userinfo = {
@@ -33,25 +33,27 @@ var template = {
             for (var i = 0; i < soundcloudData.length; i++) {
 //No longer needed because of underscore.js
 //var playlistId = soundcloudData[i].id;
-                document.getElementById('soundcloud-playlists').innerHTML += '<div class="soundcloud-box"><iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe><a id="details-' + soundcloudData[i].id + '-ref" href="#details-' + soundcloudData[i].id + '">Details</a></div>';
-                document.getElementById('details-section').innerHTML += '<div id="details-' + soundcloudData[i].id + '-section" class="container-text" style="display: none;"></div>'
+                $('#soundcloud-playlists').innerHTML += '<div class="soundcloud-box"><iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe><a id="details-' + soundcloudData[i].id + '-ref" href="#details-' + soundcloudData[i].id + '">Details</a></div>';
+                $('#details-section').innerHTML += '<div id="details-' + soundcloudData[i].id + '-section" class="container-text" style="display: none;"></div>'
                 template.generateHtml(soundcloudData[i])
-                template.detailSectionHandler('details-' + soundcloudData[i].id + '-section', soundcloudData[i]);
             }
 
 //Actually rendering it
-            Transparency.render(document.getElementById('soundcloud-section'), userinfo)
+            Transparency.render($('#soundcloud-section'), userinfo)
 
         } else {
-            document.getElementById('soundcloud-errors').innerHTML = "This user was not found.";
+            $('#soundcloud-errors').innerHTML = "This user was not found.";
         }
     },
     generateHtml: function (data) {
-        var obj = document.getElementById('details-' + data.id + '-section');
-        obj.innerHTML += '<div class="trackinfo">'
-        obj.innerHTML += '<label>Track: </label><span class="title"></span><br><br>'
-        obj.innerHTML += '<label>Link: </label><span class="permalink_url"></span><br><br>'
-        obj.innerHTML += '<label>Favorites: </label><span class="favoritings_count"></span><br><br>';
+        for (var i = 0; i < data.tracks.length; i++) {
+            var obj = $('#details-' + data.id + '-section');
+            obj.innerHTML += '<div class="trackinfo">'
+            obj.innerHTML += '<label>Track: </label><span class="title"></span><br><br>'
+            obj.innerHTML += '<label>Link: </label><span class="permalink_url"></span><br><br>'
+            obj.innerHTML += '<label>Favorites: </label><span class="favoritings_count"></span><br><br>';
+            template.detailSectionHandler('#details-' + data.id + '-section', data);
+        }
     },
     detailSectionHandler: function (div, data) {
         var titlesObj = _.pluck(data.tracks, 'title');
@@ -88,6 +90,6 @@ var template = {
                 }
             },
         }
-        Transparency.render(document.getElementById(div), toAppend, titleText);
+        Transparency.render($(div), toAppend, titleText);
     },
 }

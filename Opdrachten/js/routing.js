@@ -1,9 +1,19 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+var $ = function (id) {
+        var elements = document.querySelectorAll(id);
+        if(elements.length > 1){
+            return elements;
+        }
+        if(elements.length == 1){
+            return elements[0];
+        }
+};
 
+function show(){
+    return style.display="";
+}
+function hide(){
+    return style.display="none";
+}
 
 var routes = {
     init: function () {
@@ -48,12 +58,11 @@ var section = {
         }
     },
     showSection: function (section) {
-        console.log(section);
-        document.getElementById(section + '-section').style.display = "";
+        $('#'+ section + '-section').style.display = "";
     },
     hideSections: function () {
         //Clear all existing screens
-        var screens = document.getElementsByClassName('container-text');
+        var screens = $('.container-text');
         for (i = 0; i < screens.length; i++) {
             screens[i].style.display = "none";
         }
