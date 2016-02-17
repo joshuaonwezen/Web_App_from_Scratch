@@ -94,3 +94,9 @@ ul{
 iframe{
     margin-bottom:20px;
 }
+#loader{
+    display:flex;
+    margin:auto;
+    align-items:center;
+    background:url(loader.svg) no-repeat center center;width:60px;height:60px;
+}

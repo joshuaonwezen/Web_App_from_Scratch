@@ -5,7 +5,13 @@
     <script src="lib/routie.min.js"></script>
     <script src="lib/transparency.js"></script>
     <script src="lib/ajax.min.js"></script>
-
+    <script src="lib/hammer.js"></script>
+    
+    <script src='js/ajaxRequest.js'></script>
+    <script src='js/template.js'></script>
+    <script src='js/routing.js'></script>
+    <script src='js/soundcloud.js'></script>
+    <script src='js/eventHandling.js'></script>
     <script src="js/webApp.js"></script>
     
     <script src="http://underscorejs.org/underscore.js"></script>
@@ -49,17 +55,31 @@
             </div>
             <span id="soundcloud-error"></span>
         </div>
+        
         <div class="container-text" id="playlist-section" style="display: none;">
             <h1 style="text-align:center">
                 Playlists
             </h1>
         </div>
+        
         <div class="container-text" id="track-section" style="display: none;">
             <h1>
                 Tracks
             </h1>
         </div>
+        
+        <div class="container-text" id="swipe-section" style="display: none;">
+            <h1>
+                You swiped!
+            </h1>
+        </div>
+        
         <div id="details-section">
         </div>
+        
+        <div id="loader"> 
+        </div>
     </div>
+    
+
 </body>
