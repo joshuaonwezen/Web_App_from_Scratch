@@ -16,8 +16,8 @@ var handler = {
 //            window.location('#swipe')
 //        });
 //        hammer.get('swipe').set({direction: Hammer.DIRECTION_VERTICAL});
-        document.body.addEventListener('touchstart', function () {
-            alert('wasuppp');
+        $('body').addEventListener('touchend', function () {
+            window.location('#swipe')
         })
     },
 }
