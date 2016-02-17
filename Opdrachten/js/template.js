@@ -10,8 +10,8 @@ var template = {
     generateTemplate: function (section, obj) {
         var soundcloudData = JSON.parse(obj);
         if (soundcloudData[0] !== [] || soundcloudData !== undefined) {
+
             $('#soundcloud-playlists').innerHTML = "";
-            console.log(soundcloudData);
             //Inserting info for transparency.js
             var userinfo = {
                 username: 'Name: ' + soundcloudData[0].user.username,
@@ -19,26 +19,17 @@ var template = {
                 permalink_url: 'URL: ' + soundcloudData[0].user.permalink_url,
             }
 
-//filter and map in underscore.js
-            var underscoreExercise = _(soundcloudData).pluck('title').map(function (value) {
-                return 'Name:' + value
-            });
-            var trackcount = _.pluck(soundcloudData, 'track_count');
-            var playlistsWithAtleastFiveTracks = _.filter(trackcount, function (amount) {
-                return amount > 3;
-            });
-            console.log(underscoreExercise, trackcount, playlistsWithAtleastFiveTracks);
+            console.log(soundcloudData);
             //Creating playlist embeds for each playlist
-            var playlists = _.pluck(soundcloudData, 'id');
             for (var i = 0; i < soundcloudData.length; i++) {
-//No longer needed because of underscore.js
-//var playlistId = soundcloudData[i].id;
-                $('#soundcloud-playlists').innerHTML += '<div class="soundcloud-box"><iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlists[i] + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe><a id="details-' + soundcloudData[i].id + '-ref" href="#details-' + soundcloudData[i].id + '">Details</a></div>';
+                //No longer needed because of underscore.js
+                //var playlistId = soundcloudData[i].id;
+                $('#soundcloud-playlists').innerHTML += '<div id="soundcloud-box" class="soundcloud-box"><label style="margin-top:10px;">'+soundcloudData[i].title+'</label><a id="details-' + soundcloudData[i].id + '-ref" href="#details-' + soundcloudData[i].id + '">Details</a></div>';
                 $('#details-section').innerHTML += '<div id="details-' + soundcloudData[i].id + '-section" class="container-text" style="display: none;"></div>'
                 template.generateHtml(soundcloudData[i])
             }
 
-//Actually rendering it
+            //Actually rendering it
             Transparency.render($('#soundcloud-section'), userinfo)
 
         } else {
@@ -46,50 +37,20 @@ var template = {
         }
     },
     generateHtml: function (data) {
+        var obj = $('#details-' + data.id + '-section');
+        obj.innerHTML += '<iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + data.id + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
+
         for (var i = 0; i < data.tracks.length; i++) {
-            var obj = $('#details-' + data.id + '-section');
-            obj.innerHTML += '<div class="trackinfo">'
-            obj.innerHTML += '<label>Track: </label><span class="title"></span><br><br>'
-            obj.innerHTML += '<label>Link: </label><span class="permalink_url"></span><br><br>'
-            obj.innerHTML += '<label>Favorites: </label><span class="favoritings_count"></span><br><br>';
-            template.detailSectionHandler('#details-' + data.id + '-section', data);
+            obj.innerHTML += '<div id="trackinfo-'+data.tracks[i].id+'" class="trackinfo"><label>Track: </label><span class="title"></span><br><br><label>Link: </label><span class="permalink_url"></span><br><br><label>Favorites: </label><span class="favoritings_count"></span></div><br><br>';
+            template.detailSectionHandler('#trackinfo-'+data.tracks[i].id, data.tracks[i]);
         }
+        loader.hide();
+
     },
-    detailSectionHandler: function (div, data) {
-        var titlesObj = _.pluck(data.tracks, 'title');
-        var titles = titlesObj.map(function (value) {
-            return value
-        });
-        var urlsObj = _.pluck(data.tracks, 'permalink_url');
-        var urls = urlsObj.map(function (value) {
-            return value
-        });
-        var favoritesObj = _.pluck(data.tracks, 'favoritings_count');
-        var favorites = favoritesObj.map(function (value) {
-            return value
-        });
-        var toAppend = {
-            titles: titles,
-            urls: urls,
-            favorites: favorites
-        };
-        var titleText = {
-            title: {
-                text: function () {
-                    return this.titles;
-                }
-            },
-            permalink_url: {
-                text: function () {
-                    return this.urls;
-                }
-            },
-            favoritings_count: {
-                text: function () {
-                    return this.favorites;
-                }
-            },
-        }
-        Transparency.render($(div), toAppend, titleText);
+    detailSectionHandler: function (div, track) {
+        var span = $(div + '> span');
+        span[0].innerHTML = track.title;
+        span[1].innerHTML = track.permalink_url;
+        span[2].innerHTML = track.favoritings_count;
     },
 }

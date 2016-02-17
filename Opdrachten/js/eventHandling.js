@@ -17,7 +17,7 @@ var handler = {
 //        });
 //        hammer.get('swipe').set({direction: Hammer.DIRECTION_VERTICAL});
         $('body').addEventListener('touchend', function () {
-            window.location('#swipe')
+            $('#swipe-section > h1').text('You swiped!');
         })
     },
 }

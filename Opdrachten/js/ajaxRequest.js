@@ -5,16 +5,14 @@ var ajaxRequest = {
         return new Promise(function (resolve, reject) {
             var req = new XMLHttpRequest();
             req.open(data.method, data.url);
-            $('#loader').style.display="";
+            loader.show();
             req.onload = function () {
 
                 if (req.status == 200) {
                     resolve(template.generateTemplate(action, req.response));
-                    $('#loader').style.display="none";
 
                 } else {
                     reject(Error(req.statusText));
-                    $('#loader').style.display = "none";
                 }
             };
             req.onerror = function () {

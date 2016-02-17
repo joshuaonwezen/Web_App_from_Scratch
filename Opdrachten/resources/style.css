@@ -26,7 +26,6 @@ body{
     margin-right:10%;
     max-height:80%;
 }
-
 .panel-left{
     margin-right:10px;
 }
@@ -82,10 +81,17 @@ ul{
     flex-direction:column;
     text-align:center;
     max-width:400px;
+    height:70px;
+    transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    -webkit-transition: opacity 0.5s ease-in-out;
+}
+.soundcloud-box:hover{
+    opacity: 0.5;
 }
 .soundcloud-box a{
     width:100px;
-   background-color:#153a45;
+    background-color:#153a45;
     color:#FFFFFF;
     font-size:13.3333px;
     cursor:pointer;
