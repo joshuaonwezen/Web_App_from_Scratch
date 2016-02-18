@@ -10,27 +10,12 @@ var $ = function (id) {
 
 var routes = {
     init: function () {
-//                Window onload to wait for objects to exist
+//      Window onload to wait for objects to exist
         window.onload = function () {
             if (window.location.href.indexOf('#') != -1) {
                 section.toggle(window.location.href)
             }
-//                    Routie code, don't like it as my code is more efficient for my implementation. 
-//                    Routie requires me to setup a function for each section, instead of just doing it dynamically on change
-//                    routie({
-//                        'playlist': function () {
-//                            webApp.section.hideSections();
-//                            document.getElementById('playlist-section').style.display = "";
-//                        },
-//                        'track': function () {
-//                            webApp.section.hideSections();
-//                            document.getElementById('track-section').style.display = "";
-//                        },
-//                        'details': function () {
-//                            webApp.section.hideSections();
-//                            document.getElementById('details-section').style.display = "";
-//                        }
-//                    });
+
         }
         window.addEventListener('hashchange', function () {
             section.toggle(window.location.href);
@@ -63,3 +48,23 @@ var section = {
         }
     },
 }
+
+
+
+
+//                    Routie code, don't like it as my code is more efficient for my implementation. 
+//                    Routie requires me to setup a function for each section, instead of just doing it dynamically on change
+//                    routie({
+//                        'playlist': function () {
+//                            webApp.section.hideSections();
+//                            document.getElementById('playlist-section').style.display = "";
+//                        },
+//                        'track': function () {
+//                            webApp.section.hideSections();
+//                            document.getElementById('track-section').style.display = "";
+//                        },
+//                        'details': function () {
+//                            webApp.section.hideSections();
+//                            document.getElementById('details-section').style.display = "";
+//                        }
+//                    });
