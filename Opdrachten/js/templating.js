@@ -25,8 +25,8 @@ var template = {
                 //No longer needed because of underscore.js
                 //var playlistId = soundcloudData[i].id;
                 $('#soundcloud-playlists').innerHTML += '<div id="soundcloud-box" class="soundcloud-box"><label style="margin-top:10px;">'+soundcloudData[i].title+'</label><a id="details-' + soundcloudData[i].id + '-ref" href="#details-' + soundcloudData[i].id + '">Details</a></div>';
-                $('#details-section').innerHTML += '<div id="details-' + soundcloudData[i].id + '-section" class="container-text" style="display: none;"></div>'
-                template.generateHtml(soundcloudData[i])
+                $('#details-section').innerHTML += '<div id="details-' + soundcloudData[i].id + '-section" class="container-text hide"></div>'
+                template.generateHtml(soundcloudData[i]);
             }
 
             //Actually rendering it
@@ -44,7 +44,7 @@ var template = {
             obj.innerHTML += '<div id="trackinfo-'+data.tracks[i].id+'" class="trackinfo"><label>Track: </label><span class="title"></span><br><br><label>Link: </label><span class="permalink_url"></span><br><br><label>Favorites: </label><span class="favoritings_count"></span></div><br><br>';
             template.detailSectionHandler('#trackinfo-'+data.tracks[i].id, data.tracks[i]);
         }
-        loader.hide();
+        window.onload(loader.hide());
 
     },
     detailSectionHandler: function (div, track) {

@@ -8,13 +8,6 @@ var $ = function (id) {
         }
 };
 
-function show(){
-    return style.display="";
-}
-function hide(){
-    return style.display="none";
-}
-
 var routes = {
     init: function () {
 //                Window onload to wait for objects to exist
@@ -58,13 +51,15 @@ var section = {
         }
     },
     showSection: function (section) {
-        $('#'+ section + '-section').style.display = "";
+        var sectionDiv = $('#'+ section + '-section');
+        show(sectionDiv);
+        sectionDiv.classList.add('transition');
     },
     hideSections: function () {
         //Clear all existing screens
         var screens = $('.container-text');
         for (i = 0; i < screens.length; i++) {
-            screens[i].style.display = "none";
+            hide(screens[i]);
         }
     },
 }

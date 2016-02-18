@@ -5,9 +5,9 @@ var handler = {
       this.swipeHandler();
     },
     soundcloudHandler: function () {
-        $('#soundcloud-submit').addEventListener('click', function () {
-            soundcloud.getSoundcloudUser();
-        });
+        $('#soundcloud-submit').removeEventListener('click', soundcloud.getSoundcloudUser);
+
+        $('#soundcloud-submit').addEventListener('click', soundcloud.getSoundcloudUser);
     },
     swipeHandler: function(){
 //        var main = $('#main-container');
@@ -17,8 +17,8 @@ var handler = {
 //        });
 //        hammer.get('swipe').set({direction: Hammer.DIRECTION_VERTICAL});
         $('body').addEventListener('touchend', function () {
-            $('#swipe-section').style.display="";
-            soundcloud.getSoundcloudUser();
+            show($('#swipe-section'));
+            //soundcloud.getSoundcloudUser();
         })
     },
 }

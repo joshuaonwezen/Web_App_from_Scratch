@@ -17,9 +17,7 @@ var soundcloud = {
         var section = "soundcloud-section";
         
         
-        var worker = new Worker(ajaxRequest.init(data, section));
-        worker.onmessage = function (event) {
-            console.log("This " + event.data);
-        };
+        ajaxRequest.init(data, section);
+
     },
 }

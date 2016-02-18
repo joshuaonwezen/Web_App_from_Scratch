@@ -25,6 +25,7 @@ body{
     margin-left:10%;
     margin-right:10%;
     max-height:80%;
+    transition: all 3s ease;
 }
 .panel-left{
     margin-right:10px;
@@ -76,6 +77,10 @@ ul{
     list-style-type: none;
     margin-left: -36px;
 }
+#swipe-section{
+    margin-top:40%;
+    text-align:center;
+}
 .soundcloud-box{
     display: flex;
     flex-direction:column;
@@ -104,5 +109,30 @@ iframe{
     display:flex;
     margin:auto;
     align-items:center;
-    background:url(loader.svg) no-repeat center center;width:60px;height:60px;
+    background:url(loader.svg) no-repeat center center;
+    width:60px;
+    height:60px;
+}
+
+.transition {
+    position: absolute;
+    left: -100px;
+    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation-delay: 2s;
+    animation: slide 0.5s forwards;
+    animation-delay: 0.2s;
+}
+
+@-webkit-keyframes slide {
+    100% { left: 0; }
+}
+
+@keyframes slide {
+    100% { left: 0; }
+}
+.show{
+    display:block;
+}
+.hide{
+    display:none;
 }
