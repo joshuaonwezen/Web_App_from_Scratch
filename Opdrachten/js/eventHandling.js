@@ -28,12 +28,12 @@ var handler = {
 var motionHandling = {
     deviceMotionHandler: function (eventData) {
         var gravity, xyz = "[X, Y, Z]";
-
+    
         // Grab the acceleration including gravity from the results
         var acceleration = eventData.accelerationIncludingGravity;
-        info = xyz.replace("X", acceleration.x);
-        info = info.replace("Y", acceleration.y);
-        info = info.replace("Z", acceleration.z);
+        gravity = xyz.replace("X", acceleration.x);
+        gravity = gravity.replace("Y", acceleration.y);
+        gravity = gravity.replace("Z", acceleration.z);
         document.getElementById("gravity").innerHTML = gravity;
     },
 }
