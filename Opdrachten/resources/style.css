@@ -78,8 +78,8 @@ ul{
     margin-left: -36px;
 }
 #swipe-section{
-    margin-top:40%;
-    text-align:center;
+    text-align:right;
+    margin-right:50px;
 }
 .soundcloud-box{
     display: flex;
