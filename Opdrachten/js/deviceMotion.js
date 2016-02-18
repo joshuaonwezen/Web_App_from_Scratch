@@ -10,20 +10,9 @@ var motionHandling = {
         gravity = gravity.replace("Z", acceleration.z);
         //document.getElementById("gravity").innerHTML = gravity;
         
-        //X axis
-        if(acceleration.x > 0){
-            $('#direction').innerHTML = 'Turned left';
-        }else{
-            $('#direction').innerHTML = 'Turned right';
-        }
-
-        //Y axis
-
-        if(acceleration.y > 0){
-            $('#angle').innerHTML = 'Turned up';
-        }else{
-            $('#angle').innerHTML = 'Turned down';
-        }
+        //X / Y axis
+         $('#direction').innerHTML = (acceleration.x > 0 ? 'Turned left' : 'Turned right');
+         $('#angle').innerHTML = (acceleration.y > 0 ? 'Turned down' : 'Turned up');
         
         //Changing sections
         if (acceleration.x > 8) {
