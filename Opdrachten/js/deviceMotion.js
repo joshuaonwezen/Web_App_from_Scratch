@@ -12,7 +12,7 @@ var motionHandling = {
         
         //X / Y axis
          $('#direction').innerHTML = (acceleration.x > 0 ? 'Turned left' : 'Turned right');
-         $('#angle').innerHTML = (acceleration.y > 0 ? 'Turned down' : 'Turned up');
+         $('#angle').innerHTML = (acceleration.y > 0 ? 'Turned up' : 'Turned down');
         
         //Changing sections
         if (acceleration.x > 8) {
