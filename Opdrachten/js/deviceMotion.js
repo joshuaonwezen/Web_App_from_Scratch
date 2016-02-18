@@ -27,12 +27,12 @@ var motionHandling = {
         
         //Changing sections
         if (acceleration.x > 8) {
-            window.location.href = '#track';
-        }
-        if (acceleration.x < -8) {
             window.location.href = '#playlist';
         }
-        if (acceleration.y < 1) {
+        if (acceleration.x < -8) {
+            window.location.href = '#track';
+        }
+        if (acceleration.y < -2) {
             window.location.href = '#intro';
         }        
     },
