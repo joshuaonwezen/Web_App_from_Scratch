@@ -35,6 +35,11 @@ var motionHandling = {
         gravity = gravity.replace("Y", acceleration.y);
         gravity = gravity.replace("Z", acceleration.z);
         document.getElementById("gravity").innerHTML = gravity;
+        if(acceleration.z > 5){
+            $('#swipe-section > p').text('Turned up')
+        }else{
+            $('#swipe-section > p').text('Turned down')
+        }
     },
 }
 
