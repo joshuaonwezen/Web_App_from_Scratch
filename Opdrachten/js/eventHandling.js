@@ -25,21 +25,4 @@ var handler = {
         }
     },
 }
-var motionHandling = {
-    deviceMotionHandler: function (eventData) {
-        var gravity, xyz = "[X, Y, Z]";
-    
-        // Grab the acceleration including gravity from the results
-        var acceleration = eventData.accelerationIncludingGravity;
-        gravity = xyz.replace("X", acceleration.x);
-        gravity = gravity.replace("Y", acceleration.y);
-        gravity = gravity.replace("Z", acceleration.z);
-        document.getElementById("gravity").innerHTML = gravity;
-        if(acceleration.x > 0){
-            $('#swipe-section > p').innerHTML = 'Turned left';
-        }else{
-            $('#swipe-section > p').innerHTML = 'Turned right';
-        }
-    },
-}
 
