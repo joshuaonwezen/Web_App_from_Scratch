@@ -10,7 +10,7 @@ var template = {
     generateTemplate: function (section, obj) {
         var soundcloudData = JSON.parse(obj);
         if (soundcloudData[0] !== [] || soundcloudData !== undefined) {
-
+            $('#details-section').innerHTML = "";
             $('#soundcloud-playlists').innerHTML = "";
             //Inserting info for transparency.js
             var userinfo = {
