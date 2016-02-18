@@ -14,12 +14,10 @@ var motionHandling = {
             $('#direction').innerHTML = 'Turned right';
         }
         if(acceleration.x > 8){
-            section.showSection('track');
-            section.hideSections();
+            window.location.href = '#track';
         }
         if(acceleration.x < -8){
-            section.showSection('playlist');
-            section.hideSections();
+            window.location.href = '#playlist';
         }
         if(acceleration.y > 0){
             $('#angle').innerHTML = 'Turned up';
