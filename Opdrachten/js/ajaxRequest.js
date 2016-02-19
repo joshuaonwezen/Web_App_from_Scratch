@@ -1,7 +1,16 @@
 var ajaxRequest = {
 //Information Source: http://www.tutorialspoint.com/ajax/what_is_xmlhttprequest.htm
     init: function (data) {
-
+        this.promiseAjaxReq(data).then(function(result){
+            $('#soundcloud-error').innerHTML = "";
+            template.generateTemplate(result);
+        },function(error){
+            $('#soundcloud-error').innerHTML = "No user found";
+            console.log(error);
+            loader.hide();
+        });
+    },
+    promiseAjaxReq: function(data){
         return new Promise(function (resolve, reject) {
             var req = new XMLHttpRequest();
             req.open(data.method, data.url);
@@ -9,18 +18,18 @@ var ajaxRequest = {
             req.onload = function () {
 
                 if (req.status == 200) {
-                    resolve(template.generateTemplate(req.response));
-
+                    $('#soundcloud-error').innerHTML = "";
+                    resolve(req.response);
                 } else {
                     reject(Error(req.statusText));
-                    loader.hide();
                 }
+            }
+            req.onerror = function(){
+                reject(Error("Network error"));
             };
-            req.onerror = function () {
-                reject($('#soundcloud-error').innerHTML = "Network Error");
-                loader.hide();
-            };
+            //Didn't manage to handle the 404 even with try/catch
             req.send();
+           
         });
     }
 };

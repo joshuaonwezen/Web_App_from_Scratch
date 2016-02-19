@@ -8,7 +8,6 @@ var $ = function (id) {
         }
 };
 
-
 function show(item) {
     if(item != undefined){
         item.classList.add('show');

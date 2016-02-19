@@ -16,7 +16,6 @@ var soundcloud = {
         }
         
         
-        ajaxRequest.init(data);
-
+        ajaxRequest.init(data)
     },
 }

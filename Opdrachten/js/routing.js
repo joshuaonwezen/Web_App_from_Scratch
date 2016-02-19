@@ -26,9 +26,12 @@ var section = {
         }
     },
     showSection: function (section) {
-        var sectionDiv = $('#'+ section + '-section');
-        show(sectionDiv);
-        sectionDiv.classList.add('transition');
+        var sectionDiv = $('#' + section + '-section');
+        if (sectionDiv != undefined) {
+
+            show(sectionDiv);
+            sectionDiv.classList.add('transition');
+        }
     },
     hideSections: function () {
         //Clear all existing screens
