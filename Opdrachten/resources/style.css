@@ -111,6 +111,7 @@ iframe{
     background:url(loader.svg) no-repeat center center;
     width:60px;
     height:60px;
+    box-shadow:0 0 0 50vmax rgba(0,0,0,.8);
 }
 
 .transition {
@@ -134,4 +135,13 @@ iframe{
 }
 .hide{
     display:none;
+}
+.trackinfo{
+    background-color: #153a45;
+    padding: 10px;
+    border-bottom: 0.3em solid rgb(4, 20, 58);
+    border-top: 0.3em solid rgb(4, 20, 58);
+    border-left: 0.1em dashed;
+    border-right: 0.1em dashed;
+    max-width: 580px;
 }

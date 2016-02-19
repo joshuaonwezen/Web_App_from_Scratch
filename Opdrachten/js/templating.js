@@ -40,10 +40,10 @@ var template = {
             //Check for duplicates and show them in the right section
             if($('#trackinfo-' + data.tracks[i].id) != undefined){
                 var duplicateTrackCount = Math.floor((Math.random() * 100000) + 1);
-                obj.innerHTML += '<div id="trackinfo-' + data.tracks[i].id + duplicateTrackCount +'" class="trackinfo"><span class="title"></span><br><br><label>Link: </label><a class="permalink_url" href=""></a><br><br><label>Favorites: </label><span class="favoritings_count"></span></div><br><br>';
+                obj.innerHTML += '<div id="trackinfo-' + data.tracks[i].id + duplicateTrackCount +'" class="trackinfo"><span class="title"></span><br><br><label>Link: </label><a class="permalink_url" href=""></a><br><br><label>Genre: </label><span class="genre"></span></div><br><br>';
                 template.detailSectionHandler('#trackinfo-' + data.tracks[i].id + duplicateTrackCount, data.tracks[i]);
             }else{
-                obj.innerHTML += '<div id="trackinfo-' + data.tracks[i].id + '" class="trackinfo"><span class="title"></span><br><br><a class="permalink_url" href=""></a><br><br><label>Favorites: </label><span class="favoritings_count"></span></div><br><br>';
+                obj.innerHTML += '<div id="trackinfo-' + data.tracks[i].id + '" class="trackinfo"><span class="title"></span><br><br><a class="permalink_url" href=""></a><br><br><label>Genre: </label><span class="genre"></span></div><br><br>';
                 template.detailSectionHandler('#trackinfo-' + data.tracks[i].id, data.tracks[i]);
             }
         }
@@ -54,14 +54,14 @@ var template = {
         var span = $(div + '> span');
         var a = $(div + '> .permalink_url');
         span[0].innerHTML = track.title;
-        span[1].innerHTML = track.favoritings_count;
+        span[1].innerHTML = track.genre;
         a.setAttribute('href', track.permalink_url);
         a.innerHTML = track.permalink_url;
     },
     createEmbed: function (id) {
         var embedDiv = $('#details-' + id + '-section > .embed');
         if ($('#details-' + id + '-section iframe') === undefined){
-            embedDiv.innerHTML += '<iframe width="400" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + id + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
+            embedDiv.innerHTML += '<iframe width="600" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + id + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
         }
     },
 }
