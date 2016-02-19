@@ -31,6 +31,8 @@ var template = {
 
         } else {
             loader.hide();
+            var playlists = $('#soundcloud-playlists');
+            playlists.innerHTML = "";
             var error = $('#soundcloud-error');
             error.innerHTML = "This user was not found.";
         }
