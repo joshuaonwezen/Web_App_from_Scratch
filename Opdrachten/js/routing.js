@@ -15,8 +15,8 @@ function hide(){
     return style.display="none";
 }
 
-var routes = {
-    init: function () {
+var routes = (function() {
+    var init = function () {
 //                Window onload to wait for objects to exist
         window.onload = function () {
             if (window.location.href.indexOf('#') != -1) {
@@ -42,8 +42,12 @@ var routes = {
         window.addEventListener('hashchange', function () {
             section.toggle(window.location.href);
         });
-    },
-}
+    }
+
+    return {
+        init: init
+    }
+})();
 //Hiding sections on single page functions
 var section = {
     toggle: function (route) {
@@ -68,3 +72,5 @@ var section = {
         }
     },
 }
+
+// Zet je objecten in IFFE's zodat je alleen de public functions kan returnen
