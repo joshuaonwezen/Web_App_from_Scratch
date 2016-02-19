@@ -5,8 +5,9 @@ var eventHandling = {
       this.swipeHandler();
     },
     soundcloudHandler: function () {
-        $('#soundcloud-submit').removeEventListener('click', soundcloud.getSoundcloudUser);
-        $('#soundcloud-submit').addEventListener('click', soundcloud.getSoundcloudUser);
+        var submit = $('#soundcloud-submit');
+        submit.removeEventListener('click', soundcloud.getSoundcloudUser);
+        submit.addEventListener('click', soundcloud.getSoundcloudUser);
     },
     swipeHandler: function(){
         var body = $('body');

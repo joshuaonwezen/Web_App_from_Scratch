@@ -2,8 +2,10 @@ var template = {
     generateTemplate: function (obj) {
         var soundcloudData = JSON.parse(obj);
         if (soundcloudData[0] !== undefined && soundcloudData[0].user !== undefined) {
-            $('#details-section').innerHTML = "";
-            $('#soundcloud-playlists').innerHTML = "";
+            var detailSection = $('#details-section');
+            var soundcloudSection = $('#soundcloud-playlists');
+            detailSection.innerHTML = "";
+            soundcloudSection.innerHTML = "";
             //Inserting info for transparency.js
             var userinfo = {
                 username: 'Name: ' + soundcloudData[0].user.username,
@@ -17,8 +19,8 @@ var template = {
                 //No longer needed because of underscore.js
                 //var playlistId = soundcloudData[i].id;
                 var id = soundcloudData[i].id;
-                $('#soundcloud-playlists').innerHTML += '<div id="soundcloud-box" class="soundcloud-box"><label style="margin-top:10px;">'+soundcloudData[i].title+'</label><a id="details-' + id + '-ref" onclick="template.createEmbed('+id+');" href="#details-' + id + '">Details</a></div>';
-                $('#details-section').innerHTML += '<div id="details-' + id + '-section" class="container-text hide"></div>'
+                soundcloudSection.innerHTML += '<div id="soundcloud-box" class="soundcloud-box"><label style="margin-top:10px;">'+soundcloudData[i].title+'</label><a id="details-' + id + '-ref" onclick="template.createEmbed('+id+');" href="#details-' + id + '">Details</a></div>';
+                detailSection.innerHTML += '<div id="details-' + id + '-section" class="container-text hide"></div>'
 
                
                 template.generateHtml(soundcloudData[i]);
@@ -29,7 +31,8 @@ var template = {
 
         } else {
             loader.hide();
-            $('#soundcloud-error').innerHTML = "This user was not found.";
+            var error = $('#soundcloud-error');
+            error.innerHTML = "This user was not found.";
         }
     
     },

@@ -1,16 +1,18 @@
 var ajaxRequest = {
 //Information Source: http://www.tutorialspoint.com/ajax/what_is_xmlhttprequest.htm
     init: function (data) {
+        var error = $('#soundcloud-error');
         this.promiseAjaxReq(data).then(function(result){
-            $('#soundcloud-error').innerHTML = "";
+            error.innerHTML = "";
             template.generateTemplate(result);
         },function(error){
-            $('#soundcloud-error').innerHTML = "No user found";
+            error.innerHTML = "No user found";
             console.log(error);
             loader.hide();
         });
     },
     promiseAjaxReq: function(data){
+        var error = $('#soundcloud-error');
         return new Promise(function (resolve, reject) {
             var req = new XMLHttpRequest();
             req.open(data.method, data.url);
@@ -18,7 +20,7 @@ var ajaxRequest = {
             req.onload = function () {
 
                 if (req.status == 200) {
-                    $('#soundcloud-error').innerHTML = "";
+                    error.innerHTML = "";
                     resolve(req.response);
                 } else {
                     reject(Error(req.statusText));
