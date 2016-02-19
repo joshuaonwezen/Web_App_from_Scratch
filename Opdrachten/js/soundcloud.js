@@ -14,10 +14,9 @@ var soundcloud = {
             method: "GET",
             url: soundcloud.apiPrefix + requestPath + "/" + userId + "/playlists" + soundcloud.clientId,
         }
-        var section = "soundcloud-section";
         
         
-        ajaxRequest.init(data, section);
+        ajaxRequest.init(data);
 
     },
 }

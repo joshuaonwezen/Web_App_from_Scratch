@@ -1,5 +1,5 @@
 //Add event listener
-var handler = {
+var eventHandling = {
     init: function(){
       this.soundcloudHandler();
       this.swipeHandler();
@@ -9,11 +9,12 @@ var handler = {
         $('#soundcloud-submit').addEventListener('click', soundcloud.getSoundcloudUser);
     },
     swipeHandler: function(){
-        $('body').addEventListener('touchend', function () {
+        var body = $('body');
+        body.addEventListener('touchend', function () {
             show($('#swipe-section'));
         });
         if (window.DeviceMotionEvent) {
-            window.addEventListener('devicemotion', motionHandling.deviceMotionHandler, false);
+            window.addEventListener('devicemotion', deviceMotion.deviceMotionHandler, false);
         }
     },
 }

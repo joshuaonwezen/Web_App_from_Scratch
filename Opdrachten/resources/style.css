@@ -28,10 +28,9 @@ body{
     transition: all 3s ease;
 }
 .panel-left{
-    margin-right:10px;
 }
 .panel-right, .panel-left{
-    width:50%;
+    width:100%;
     background:#153a45;
 }
 

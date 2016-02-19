@@ -1,13 +1,3 @@
-var $ = function (id) {
-        var elements = document.querySelectorAll(id);
-        if(elements.length > 1){
-            return elements;
-        }
-        if(elements.length == 1){
-            return elements[0];
-        }
-};
-
 var routes = {
     init: function () {
 //      Window onload to wait for objects to exist

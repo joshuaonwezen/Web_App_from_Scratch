@@ -8,7 +8,7 @@
                 routes.init();
                 //Add handlers
                 window.onload = function () {
-                    handler.init();
+                    eventHandling.init();
                 }
                 
             },

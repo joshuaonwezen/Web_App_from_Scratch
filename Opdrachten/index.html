@@ -14,6 +14,7 @@
     <script src='js/soundcloud.js'></script>
     <script src='js/deviceMotion.js'></script>
     <script src='js/eventHandling.js'></script>
+    <script src='js/utils.js'></script>
     <script src="js/webApp.js"></script>
     
     <script src="https://api.soundcloud.com/tracks?client_id=a1ed0ce4135f0f32d4f1eaa4e5699b8e"></script>
@@ -26,12 +27,7 @@
     <div class="nav">
         <div class="panel-left">
             <h1>
-                <a href="#playlist">Left menu</a>
-            </h1>
-        </div>
-        <div class="panel-right">
-            <h1>
-                <a href="#track">Right menu</a>
+                Soundcloud Playlist Loader
             </h1>
         </div>
     </div>
@@ -39,7 +35,7 @@
     <div id="main-container" class="container">
         <div class="container-text" id="intro-section">
             <p>
-                Input a soundcloud username below and press load.  
+                Input a soundcloud username below and press load to load the users playlists!  
             </p>
             <input type="text" id="soundcloud-username"/>
             <button id="soundcloud-submit">Load</button>

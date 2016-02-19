@@ -1,4 +1,4 @@
-var motionHandling = {
+var deviceMotion = {
     //Source: http://www.html5rocks.com/en/tutorials/device/orientation/
     deviceMotionHandler: function (eventData) {
         var acceleration = eventData.accelerationIncludingGravity;

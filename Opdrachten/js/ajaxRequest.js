@@ -1,6 +1,6 @@
 var ajaxRequest = {
 //Information Source: http://www.tutorialspoint.com/ajax/what_is_xmlhttprequest.htm
-    init: function (data, action) {
+    init: function (data) {
 
         return new Promise(function (resolve, reject) {
             var req = new XMLHttpRequest();
@@ -9,14 +9,16 @@ var ajaxRequest = {
             req.onload = function () {
 
                 if (req.status == 200) {
-                    resolve(template.generateTemplate(action, req.response));
+                    resolve(template.generateTemplate(req.response));
 
                 } else {
                     reject(Error(req.statusText));
+                    loader.hide();
                 }
             };
             req.onerror = function () {
-                reject(Error("Network Error"));
+                reject($('#soundcloud-error').innerHTML = "Network Error");
+                loader.hide();
             };
             req.send();
         });
