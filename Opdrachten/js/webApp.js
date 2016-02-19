@@ -7,9 +7,7 @@
             init: function () {
                 routes.init();
                 //Add handlers
-                window.onload = function () {
-                    handler.init();
-                }
+                window.onload = handler.init;
                 
             },
         },        
@@ -17,3 +15,5 @@
     }
     webApp.app.init();
 })();
+
+// Het is niet nodig om de functie aan te roepen in een functie
