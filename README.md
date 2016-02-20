@@ -1,5 +1,6 @@
 # Web_App_from_Scratch
 #http://onwezen.github.io/Web_App_from_Scratch/Opdrachten/
+#24/02/2015 - What's new? Error handling, localstorage, cleaner code, new layout, explanation, styling
 # Weekly Nerd
 #http://bit.ly/1OkjbKe
 

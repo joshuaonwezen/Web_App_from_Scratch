@@ -1,18 +1,5 @@
 var ajaxRequest = {
 //Information Source: http://www.tutorialspoint.com/ajax/what_is_xmlhttprequest.htm
-    init: function (data) {
-        var errorText = $('#soundcloud-error');
-        this.promiseAjaxReq(data).then(function(result){
-            errorText.innerHTML = "";
-            template.generateTemplate(result);
-        },function(error){
-            var playlists = $('#soundcloud-playlists');
-            playlists.innerHTML = "";
-            errorText.innerHTML = "This user was not found";
-            console.log(error);
-            loader.hide();
-        });
-    },
     promiseAjaxReq: function(data){
         var error = $('#soundcloud-error');
         return new Promise(function (resolve, reject) {

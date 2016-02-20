@@ -21,6 +21,7 @@ var section = {
             var section = route.split('#');
             this.showSection(section[1]);
         }else{
+            //Show homepage - Exception
             this.showSection('intro');
             this.showSection('soundcloud');
         }
