@@ -14,10 +14,12 @@ var template = {
             }
 
             console.log(soundcloudData);
+            var filteredId = _.pluck(soundcloudData, 'id');
+
             //Creating playlist embeds for each playlist
             for (var i = 0; i < soundcloudData.length; i++) {
                 //Took underscore.js out as it was only adding more lines.
-                var id = soundcloudData[i].id;
+                id = filteredId[i];
                 soundcloudSection.innerHTML += '<div id="soundcloud-box" class="soundcloud-box"><label style="margin-top:10px;">'+soundcloudData[i].title+'</label><a id="details-' + id + '-ref" onclick="template.createEmbed('+id+');" href="#details-' + id + '">Details</a></div>';
                 detailSection.innerHTML += '<div id="details-' + id + '-section" class="container-text hide"></div>'
 
@@ -51,6 +53,8 @@ var template = {
                 template.detailSectionHandler('#trackinfo-' + data.tracks[i].id, data.tracks[i]);
             }
         }
+        var error = $('#soundcloud-error');
+        error.innerHTML = "";
         window.onload(loader.hide());
 
     },

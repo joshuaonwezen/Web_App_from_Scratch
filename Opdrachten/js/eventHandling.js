@@ -1,13 +1,13 @@
 //Add event listener
 var eventHandling = {
     init: function(){
-      this.soundcloudHandler();
+      this.soundcloudLoadHandler();
       this.swipeHandler();
     },
-    soundcloudHandler: function () {
+    soundcloudLoadHandler: function () {
         var submit = $('#soundcloud-submit');
-        submit.removeEventListener('click', soundcloud.getSoundcloudUser);
-        submit.addEventListener('click', soundcloud.getSoundcloudUser);
+        submit.removeEventListener('click', soundcloudAPIController.getSoundcloudUser);
+        submit.addEventListener('click', soundcloudAPIController.getSoundcloudUser);
     },
     swipeHandler: function(){
         var body = $('body');

@@ -8,15 +8,25 @@ var $ = function (id) {
         }
 };
 
-function show(item) {
+var show = function(item) {
     if(item != undefined){
         item.classList.add('show');
         item.classList.remove('hide');
     }
 }
-function hide(item) {
+var hide = function(item) {
     if (item != undefined) {
         item.classList.add('hide');
         item.classList.remove('show');
+    }
+}
+
+var loader = {
+    //not using the show cause of display:flex exception
+    show: function(){
+        $('#loader').style.display = "";
+    },
+    hide: function(){
+        $('#loader').style.display = "none";
     }
 }

@@ -1,4 +1,4 @@
-var soundcloud = {
+var soundcloudAPIController = {
     //Info for soundcloud
     clientId: "?client_id=a1ed0ce4135f0f32d4f1eaa4e5699b8e",
     apiPrefix: "http://api.soundcloud.com/",
@@ -12,7 +12,7 @@ var soundcloud = {
         }
         var data = {
             method: "GET",
-            url: soundcloud.apiPrefix + requestPath + "/" + userId + "/playlists" + soundcloud.clientId,
+            url: soundcloudAPIController.apiPrefix + requestPath + "/" + userId + "/playlists" + soundcloudAPIController.clientId,
             storageName: userId,
         }
         
@@ -21,7 +21,7 @@ var soundcloud = {
             var storage = localStorage.getItem(userId);
             template.generateTemplate(storage);
         } else {
-            soundcloud.createAjaxPromise(data);
+            soundcloudAPIController.createAjaxPromise(data);
         }
     },
     createAjaxPromise: function (data) {
